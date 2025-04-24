@@ -2,8 +2,8 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
  
-img_orig = cv.imread("./original_10_1.png")  # Read image data
-img_forg = cv.imread("./forgeries_10_1.png")
+img_orig = cv.imread(r"signatures/full_org/original_10_1.png")  # Read image data
+img_forg = cv.imread(r"signatures/full_forg/forgeries_10_1.png")
 
 
 def goodCornerDetection(img):
@@ -24,7 +24,7 @@ def goodCornerDetection(img):
 
 
 # Output new created images with the new lines superimposed
-cv.imwrite('./LINES_original.png', goodCornerDetection(img_orig))
-cv.imwrite('./LINES_forg.png', goodCornerDetection(img_forg))
+cv.imwrite(r'./LINES_original.png', goodCornerDetection(img_orig))
+cv.imwrite(r'./LINES_forg.png', goodCornerDetection(img_forg))
 
 print("Complete.")

@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
  
-img = cv.imread("./original_10_1.png")  # Read image data
+img = cv.imread(r"signatures/full_org/original_10_1.png")  # Read image data
 gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)  # Make image grayscale (no change to the signatures images)
 edges = cv.Canny(gray,50,150,apertureSize = 3)  # The edge-detection function
 print(edges)
