@@ -19,18 +19,30 @@ def goodCornerDetection(img):
     corners = cv.goodFeaturesToTrack(imgGray, maxCorners, quality, minDistance)
     
     for corner in corners:
+        print(corner)
         x = int(corner[0][0])
         y = int(corner[0][1])
         data_list.append((x,y))
         cv.circle(imgRGB, (x,y),3,(0,0,255),-1) # 3rd value is size of dots
     
     print(data_list)
-    with open(f"./postSignature/test.dat", "w") as outfile:
+    with open(f"./test.dat", "w") as outfile:
         for x in data_list:
             outfile.write(f"{str(x[0])},{str(x[1])}\n")
 
     return imgRGB
 
+def siftTest():     #using SIFT algorithm for feature detection
+    img = img_orig
+    gray= cv.cvtColor(img,cv.COLOR_BGR2GRAY)
+    
+    sift = cv.SIFT_create()
+    kp = sift.detect(gray,None)
+    
+    print(kp[0])
+    img=cv.drawKeypoints(gray,kp,img)
+    
+    cv.imwrite('sift_keypoints.jpg',img)
 
 # Output new created images with the new lines superimposed
 # cv.imwrite(r'./LINES_original.png', goodCornerDetection(img_orig))
@@ -44,8 +56,8 @@ def main():
     for pic in scan:
         count += 1
     print(count)
-
-
+    goodCornerDetection(img_orig)
+    siftTest()
     
     
     pass
