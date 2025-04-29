@@ -7,8 +7,9 @@ img_orig = cv.imread(r"signatures/full_org/original_10_1.png")  # Read image dat
 img_forg = cv.imread(r"signatures/full_forg/forgeries_10_1.png")
 
 
-def goodCornerDetection(img):
+def goodCornerDetection(img, name, dirIn, dirOutDat, dirOutImg):
     data_list = []
+    print(dirOutImg)
     imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     
@@ -19,18 +20,22 @@ def goodCornerDetection(img):
     corners = cv.goodFeaturesToTrack(imgGray, maxCorners, quality, minDistance)
     
     for corner in corners:
-        print(corner)
         x = int(corner[0][0])
         y = int(corner[0][1])
         data_list.append((x,y))
         cv.circle(imgRGB, (x,y),3,(0,0,255),-1) # 3rd value is size of dots
     
-    print(data_list)
-    with open(f"./test.dat", "w") as outfile:
-        for x in data_list:
-            outfile.write(f"{str(x[0])},{str(x[1])}\n")
+    # print(data_list)
+    files = ["org_data_cords.csv","forg_data_cords.csv"]
+    for i in files:
+        with open(f"{dirOutDat}/{i}", "a") as outfile:
+            for x in data_list:
+                outfile.write(f"{str(x[0])},{str(x[1])}")
+            outfile.write("\n")
+    
+    # cv.imwrite(f"{dirOutImg}/{name}",imgRGB)
+    
 
-    return imgRGB
 
 def siftTest():     #using SIFT algorithm for feature detection
     img = img_orig
@@ -49,15 +54,31 @@ def siftTest():     #using SIFT algorithm for feature detection
 # cv.imwrite(r'./LINES_forg.png', goodCornerDetection(img_forg))
 
 def main():
-    path = "./signatures/full_forg"
-    scan = os.scandir(path)
-    files = []
-    count = 0
-    for pic in scan:
-        count += 1
-    print(count)
-    goodCornerDetection(img_orig)
-    siftTest()
+    inputPathName = ["./signatures/full_org","./signatures/full_forg"]
+    outputCornerPathName = [("./CornerDetect/data","./CornerDetect/full_org"),
+                         ("./CornerDetect/data","./CornerDetect/full_forg")]
+    
+    
+    # for x in range(len(inputPathName)):
+    # scan = os.listdir(inputPathName[0])
+    # print(os.getcwd())
+    for dirpath, dirnames, filenameList in os.walk(inputPathName[0],topdown=True):
+        for filename in filenameList:
+            if filename.endswith(".png"):
+                img = cv.imread(f"{inputPathName[0]}/{filename}")
+                goodCornerDetection(img,filename,inputPathName[0],outputCornerPathName[0][0],outputCornerPathName[0][1])
+            
+
+
+    # path = "./signatures/full_org"
+    
+    # files = []
+    # count = 0
+    # for pic in scan:
+    #     count += 1
+    # print(count)
+    # goodCornerDetection(img_orig)
+    # siftTest()
     
     
     pass
