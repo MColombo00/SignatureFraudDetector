@@ -7,7 +7,7 @@ img_orig = cv.imread(r"signatures/full_org/original_10_1.png")  # Read image dat
 img_forg = cv.imread(r"signatures/full_forg/forgeries_10_1.png")
 
 
-def goodCornerDetection(img, name, dirIn, dirOutDat, dirOutImg):
+def goodCornerDetection(img, name, dirIn, dirOutDat, dirOutImg, pointFile):
     data_list = []
     print(dirOutImg)
     imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
@@ -26,12 +26,11 @@ def goodCornerDetection(img, name, dirIn, dirOutDat, dirOutImg):
         cv.circle(imgRGB, (x,y),3,(0,0,255),-1) # 3rd value is size of dots
     
     # print(data_list)
-    files = ["org_data_cords.csv","forg_data_cords.csv"]
-    for i in files:
-        with open(f"{dirOutDat}/{i}", "a") as outfile:
-            for x in data_list:
-                outfile.write(f"{str(x[0])},{str(x[1])}")
-            outfile.write("\n")
+
+    with open(f"{dirOutDat}/{pointFile}", "a") as outfile:
+        for x in data_list:
+            outfile.write(f"{str(x[0])},{str(x[1])}|")
+        outfile.write("\n")
     
     # cv.imwrite(f"{dirOutImg}/{name}",imgRGB)
     
@@ -47,7 +46,7 @@ def siftTest():     #using SIFT algorithm for feature detection
     print(kp[0])
     img=cv.drawKeypoints(gray,kp,img)
     
-    cv.imwrite('sift_keypoints.jpg',img)
+    # cv.imwrite('sift_keypoints.jpg',img)
 
 # Output new created images with the new lines superimposed
 # cv.imwrite(r'./LINES_original.png', goodCornerDetection(img_orig))
@@ -59,14 +58,19 @@ def main():
                          ("./CornerDetect/data","./CornerDetect/full_forg")]
     
     
-    # for x in range(len(inputPathName)):
     # scan = os.listdir(inputPathName[0])
     # print(os.getcwd())
-    for dirpath, dirnames, filenameList in os.walk(inputPathName[0],topdown=True):
-        for filename in filenameList:
-            if filename.endswith(".png"):
-                img = cv.imread(f"{inputPathName[0]}/{filename}")
-                goodCornerDetection(img,filename,inputPathName[0],outputCornerPathName[0][0],outputCornerPathName[0][1])
+    for x in range(len(inputPathName)):
+        for dirpath, dirnames, filenameList in os.walk(inputPathName[x],topdown=True):
+            for filename in filenameList:
+                if filename.endswith(".png"):
+                    img = cv.imread(f"{inputPathName[x]}/{filename}")
+                    if "full_org" in inputPathName[x]:
+                        pointFile = "org_data_cords.csv"
+                    else:
+                        pointFile = "forg_data_cords.csv"
+                    
+                    goodCornerDetection(img,filename,inputPathName[x],outputCornerPathName[x][0],outputCornerPathName[x][1], pointFile)
             
 
 
