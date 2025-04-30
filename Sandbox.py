@@ -28,9 +28,9 @@ for row in range(6):
             corner_coords.append((cornerY + y_start, cornerX + x_start))
 
 skimage.io.imshow(img)
-print(height)
+# print(height)
 print(corner_coords)
 for (cornerY, cornerX) in corner_coords:
     plt.plot(cornerX, cornerY, "og", markersize=5)
 plt.show()
-print(img)
+# print(img)
