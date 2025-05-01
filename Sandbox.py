@@ -23,21 +23,29 @@ for row in range(6):
         x_end = (col + 1) * cell_width
 
 
+        
         cell = img[y_start:y_end, x_start:x_end]
         coords = skimage.feature.corner_peaks(
-            skimage.feature.corner_shi_tomasi(cell), min_distance=10)
+        skimage.feature.corner_shi_tomasi(cell), min_distance=10)
+        
+        center_x = x_start + cell_width / 2
+        center_y = y_start + cell_height / 2
+        plt.plot(center_x, center_y, marker='o', color='red')
+        
         for (cornerY, cornerX) in coords:
             corner_coords.append((cornerY + y_start, cornerX + x_start))
             finished_data.append([(cornerY + y_start, cornerX + x_start)])
 
+        
+
+
 plt.imshow(img, cmap='gray')
-for i in range(7):
+for i in range(6):
     y = i * cell_height
     plt.axhline(y, color='red', linewidth=0.5)
-
-for j in range(7):
-    x = j * cell_width
+    x = i* cell_width
     plt.axvline(x, color='red', linewidth=0.5)
+    
 
 
 # print(height)
