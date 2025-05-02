@@ -8,6 +8,7 @@ count = 0
 x = []
 y = []  # 0 for original, 1 for forgery
 
+#testing
 
 def generateData(path , file, label):
     img = skimage.io.imread(os.path.join(path, file), as_gray=True)
