@@ -6,7 +6,7 @@ import sklearn.model_selection
 x = np.load("./TestDataSkimage/data/X.npy", allow_pickle=True)
 y = np.load("./TestDataSkimage/data/Y.npy", allow_pickle=True)
 
-x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.2, shuffle=True, random_state=1)
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.2, shuffle=True, random_state=1) #delete random state for random results
 
 nn = neighbors.KNeighborsClassifier(n_neighbors=5)
 nn.fit(x_train,y_train)

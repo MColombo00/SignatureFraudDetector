@@ -4,7 +4,7 @@ import sklearn
 import skimage
 from matplotlib import pyplot as plt
 x = []
-y = [0, 1] #0 for original, 1 for forgery
+y = [] #0 for original, 1 for forgery
 
 def generateData(file, label):
     img = skimage.io.imread(f"{file}", as_gray=True)
