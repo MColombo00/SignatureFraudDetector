@@ -10,14 +10,34 @@ y = np.load("./TestDataSkimage/data/Y.npy", allow_pickle=True)
 
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.2, shuffle=True, random_state=1) #delete random state for random results
 
-nn = neighbors.KNeighborsClassifier(n_neighbors=5)
-nn.fit(x_train,y_train)
-predictions = nn.predict(x_test)
+
+accuracies = []
+for i in range(1,21):
+    n_neighbors = i
+    nn = neighbors.KNeighborsClassifier(n_neighbors)
+    nn.fit(x_train,y_train)
+    predictions = nn.predict(x_test)
+    
+    acc = 0
+    for j in range(len(y_test)):
+        # If the prediciton matches the actual class, add 1 to the accumulator:
+        if y_test[j] == predictions[j]:
+            acc += 1
+    ###
+    
+    accuracies.append(round(acc/len(y_test), 3))
+###
+
+#print("ACCURACIES: ", accuracies)
+plt.plot([n for n in range(1,21)], accuracies, marker='o', linestyle='-')
+plt.grid(True)
+plt.savefig("./KNN_KVal_Comparison.png")
 
 # print(predictions)
 # "Class Value = " + x_test[i] + "----" + 
-for i in range(len(y_test)):
+'''for i in range(len(y_test)):
     print(f"true value: {y_test[i]} ---- prediction: {predictions[i]}")
+'''
 print(f"Length of y Test = {len(y_test)}")
 
 
