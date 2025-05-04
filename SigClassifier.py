@@ -11,8 +11,9 @@ y = np.load("./TestDataSkimage/data/Y.npy", allow_pickle=True)
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.2, shuffle=True, random_state=1) #delete random state for random results
 
 
+# Generate list of accuracies, one per K-value, to compare to each other:
 accuracies = []
-for i in range(1,21):
+for i in range(50,95):
     n_neighbors = i
     nn = neighbors.KNeighborsClassifier(n_neighbors)
     nn.fit(x_train,y_train)
@@ -28,10 +29,21 @@ for i in range(1,21):
     accuracies.append(round(acc/len(y_test), 3))
 ###
 
-#print("ACCURACIES: ", accuracies)
-plt.plot([n for n in range(1,21)], accuracies, marker='o', linestyle='-')
+# Plot out chart for K-value vs Accuracy:
+#plt.figure(figsize=(20,20))
+plt.title("K-Value and Associated Model Accuracy")
+plt.xlabel("Value of K")
+plt.ylabel("Model Accuracy")
+plt.plot([n for n in range(50,95)], accuracies, marker='o', linestyle='-')
 plt.grid(True)
-plt.savefig("./KNN_KVal_Comparison.png")
+plt.savefig("./KNN_KVal_Comparison_.png")
+
+'''
+shortAcc = accuracies[69:]
+plt.plot([n for n in range(70,95)], shortAcc, marker='o', linestyle='-')
+plt.grid(True)
+plt.savefig("./KNN_KVal_Comparison_2.png")
+'''
 
 # print(predictions)
 # "Class Value = " + x_test[i] + "----" + 
@@ -40,9 +52,16 @@ plt.savefig("./KNN_KVal_Comparison.png")
 '''
 print(f"Length of y Test = {len(y_test)}")
 
-
+############
+# ACTUAL CALCULAITONS/PREDICITONS BELOW
 #############
 GENUINE = 0
+
+# Predict:
+n_neighbors = 89
+nn = neighbors.KNeighborsClassifier(n_neighbors)
+nn.fit(x_train,y_train)
+predictions = nn.predict(x_test)
 
 # Accuracy:
 
