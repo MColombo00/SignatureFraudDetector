@@ -8,7 +8,7 @@ from sklearn import metrics
 x = np.load("./TestDataSkimage/data/X.npy", allow_pickle=True)
 y = np.load("./TestDataSkimage/data/Y.npy", allow_pickle=True)
 
-x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.2, shuffle=True, random_state=1) #delete random state for random results
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.2, shuffle=True)
 
 
 # Generate list of accuracies, one per K-value, to compare to each other:

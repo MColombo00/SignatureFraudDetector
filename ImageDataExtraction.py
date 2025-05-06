@@ -12,12 +12,10 @@ def generateData(path , file, label):
 
     resizeImg = skimage.img_as_ubyte(skimage.transform.resize(img, (256, 256)))
 
-
-    #temporary disable since i generated them already
-    # if (label == 0):
-    #     skimage.io.imsave(f"./TestDataSkimage/full_org/{file}_Processed.png", resizeImg)      
-    # elif (label == 1):
-    #     skimage.io.imsave(f"./TestDataSkimage/full_forg/{file}_Processed.png", resizeImg)
+    if (label == 0):
+        skimage.io.imsave(f"./TestDataSkimage/full_org/{file}_Processed.png", resizeImg)      
+    elif (label == 1):
+        skimage.io.imsave(f"./TestDataSkimage/full_forg/{file}_Processed.png", resizeImg)
 
     flatImg = resizeImg.flatten()
     normalizedImg = flatImg / 255.0
@@ -34,9 +32,6 @@ for i in range(len(inputPathName)):
                 img = generateData(dirpath, filename, i)
                 x.append(img)
                 y.append(i)
-
-                # count += 1
-                # print(count)
 
 
 np.save("./TestDataSkimage/data/X.npy", x, allow_pickle=True)
