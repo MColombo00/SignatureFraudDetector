@@ -13,7 +13,7 @@ x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y
 
 # Generate list of accuracies, one per K-value, to compare to each other:
 accuracies = []
-for i in range(50,95):
+for i in range(5,150):
     n_neighbors = i
     nn = neighbors.KNeighborsClassifier(n_neighbors)
     nn.fit(x_train,y_train)
@@ -34,9 +34,9 @@ for i in range(50,95):
 plt.title("K-Value and Associated Model Accuracy")
 plt.xlabel("Value of K")
 plt.ylabel("Model Accuracy")
-plt.plot([n for n in range(50,95)], accuracies, marker='o', linestyle='-')
+plt.plot([n for n in range(5,150)], accuracies, marker='o', linestyle='-')
 plt.grid(True)
-plt.savefig("./KNN_KVal_Comparison_.png")
+plt.savefig("./KNN_KVal_Comparison_test.png")
 
 '''
 shortAcc = accuracies[69:]
@@ -58,7 +58,7 @@ print(f"Length of y Test = {len(y_test)}")
 GENUINE = 0
 
 # Predict:
-n_neighbors = 89
+n_neighbors = 65
 nn = neighbors.KNeighborsClassifier(n_neighbors)
 nn.fit(x_train,y_train)
 predictions = nn.predict(x_test)
