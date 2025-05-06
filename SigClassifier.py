@@ -91,4 +91,4 @@ confMatrix_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion
 confMatrix_display.plot()
 plt.savefig("./confMatrix.png")
 
-print("Confusion matrix eported into PNG")
+print("Confusion matrix exported into PNG")

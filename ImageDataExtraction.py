@@ -1,9 +1,7 @@
 import numpy as np
 import os
-import sklearn
 import skimage
 from matplotlib import pyplot as plt
-import csv
 count = 0
 x = []
 y = []  # 0 for original, 1 for forgery
@@ -43,18 +41,3 @@ for i in range(len(inputPathName)):
 
 np.save("./TestDataSkimage/data/X.npy", x, allow_pickle=True)
 np.save("./TestDataSkimage/data/Y.npy", y, allow_pickle=True)
-
-
-# with open("./TestDataSkimage/data/X.npy", mode="w", newline="") as file:
-#     writer = csv.writer(file)
-#     for img_data in x:
-#         writer.writerow(img_data)
-# with open("./TestDataSkimage/data/Y.csv", mode="w", newline="") as file:
-#     writer = csv.writer(file)
-#     for label in y:
-#         writer.writerow([label])
-
-# print(x)
-# print(y)
-# plt.imshow(resizeImg, cmap='grey')
-# plt.show()
