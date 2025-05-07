@@ -1,0 +1,7 @@
+Dependency packages:
+
+matplotlib.pyplot
+scikit-learn
+skimage
+opencv
+numpy

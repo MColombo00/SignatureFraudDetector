@@ -12,6 +12,8 @@ def goodCornerDetection(img, name, dirIn, dirOutDat, dirOutImg, pointFile):
     print(dirOutImg)
     imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+
+    #imgCanny = cv.Canny(imgGray, 100, 110)
     
     maxCorners = 200
     quality = 0.05  # Controls amount of dots; 0.05 was a good compromise btwn amount and accuracy
@@ -54,8 +56,8 @@ def siftTest():     #using SIFT algorithm for feature detection
 
 def main():
     inputPathName = ["./signatures/full_org","./signatures/full_forg"]
-    outputCornerPathName = [("./CornerDetect/data","./CornerDetect/full_org"),
-                         ("./CornerDetect/data","./CornerDetect/full_forg")]
+    outputCornerPathName = [("./CornerDetectData","./CornerDetect/full_org"),
+                         ("./CornerDetectData","./CornerDetect/full_forg")]
     
     
     # scan = os.listdir(inputPathName[0])
@@ -64,6 +66,7 @@ def main():
         for dirpath, dirnames, filenameList in os.walk(inputPathName[x],topdown=True):
             for filename in filenameList:
                 if filename.endswith(".png"):
+                    print(f"{inputPathName[x]}/{filename}")
                     img = cv.imread(f"{inputPathName[x]}/{filename}")
                     if "full_org" in inputPathName[x]:
                         pointFile = "org_data_cords.csv"
